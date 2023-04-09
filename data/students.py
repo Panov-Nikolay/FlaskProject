@@ -8,6 +8,7 @@ class Student(SqlAlchemyBase):
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
+    login = sqlalchemy.Column(sqlalchemy.String)
     first_name = sqlalchemy.Column(sqlalchemy.String)
     last_name = sqlalchemy.Column(sqlalchemy.String)
     surname = sqlalchemy.Column(sqlalchemy.String)
