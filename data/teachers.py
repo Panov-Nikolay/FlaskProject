@@ -8,6 +8,7 @@ class Teacher(SqlAlchemyBase):
 
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
+    login = sqlalchemy.Column(sqlalchemy.String)
     id_school = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('schools.id'))
     first_name = sqlalchemy.Column(sqlalchemy.String)
     last_name = sqlalchemy.Column(sqlalchemy.String)
