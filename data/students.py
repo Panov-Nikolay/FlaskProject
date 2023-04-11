@@ -15,6 +15,10 @@ class Student(SqlAlchemyBase):
     hashed_password = sqlalchemy.Column(sqlalchemy.String)
     id_class = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('classes.id'))
 
+    school = orm.relationship('Class')
+    marks = orm.relationship('Mark', back_populates='student')
+    final_marks = orm.relationship('Final_marks', back_populates='student')
+
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
 

@@ -6,8 +6,7 @@ app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 
 
 def main():
-    db_session.global_init("db/blogs.db")
-    app.run()
+    db_session.global_init("db/magazine.db")
 
 
 if __name__ == '__main__':

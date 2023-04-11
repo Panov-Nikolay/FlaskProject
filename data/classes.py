@@ -12,3 +12,4 @@ class Class(SqlAlchemyBase):
     id_school = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('schools.id'))
 
     school = orm.relationship('School')
+    students = orm.relationship('Student', back_populates='class')

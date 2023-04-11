@@ -12,3 +12,5 @@ class School(SqlAlchemyBase):
     id_region = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('regions.id'))
 
     region = orm.relationship('Region')
+    classes = orm.relationship('Class', back_populates='school')
+    teachers = orm.relationship('Teacher', back_populates='school')

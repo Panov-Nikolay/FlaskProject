@@ -9,3 +9,5 @@ class Region(SqlAlchemyBase):
     id = sqlalchemy.Column(sqlalchemy.Integer,
                            primary_key=True, autoincrement=True)
     title = sqlalchemy.Column(sqlalchemy.String, nullable=True)
+
+    schools = orm.relationship('School', back_populates='region')
