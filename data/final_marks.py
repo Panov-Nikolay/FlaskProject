@@ -5,8 +5,9 @@ from .db_session import SqlAlchemyBase
 
 class FinalMarks(SqlAlchemyBase):
     __tablename__ = 'final_marks'
-    student_id = sqlalchemy.Column(sqlalchemy.Integer)
+
+    id_student = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('students.id'))
     part = sqlalchemy.Column(sqlalchemy.String)  # <--- четверть / полугодие / год == a / b / c + её номер
     # a2 = вторая четверть; b1 = первое полугодие
-    subject_id = sqlalchemy.Column(sqlalchemy.Integer)
+    id_subject = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('subjects.id'))
     mark = sqlalchemy.Column(sqlalchemy.Integer)

@@ -5,5 +5,6 @@ from .db_session import SqlAlchemyBase
 
 class TeacherClass(SqlAlchemyBase):
     __tablename__ = 'teacher_class'
-    teacher_id = sqlalchemy.Column(sqlalchemy.Integer)
-    class_id = sqlalchemy.Column(sqlalchemy.Integer)
+
+    id_teacher = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('teachers.id'))
+    id_class = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('classes.id'))
