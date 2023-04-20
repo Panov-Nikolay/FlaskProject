@@ -1,8 +1,12 @@
 {% extends "html/base.html" %}
 
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/selector.css')}}">
+{% endblock %}
+
 {% block content %}
 <div class="selector">
-    <a href="/login"><button class="btn btn-primary">Как учитель</button></a>
+    <a href="/sign_up_as_teacher"><button class="btn btn-primary">Как учитель</button></a>
     <a href="/"><button class="btn btn-primary">Как ученик</button></a>
 </div>
 {% endblock %}
