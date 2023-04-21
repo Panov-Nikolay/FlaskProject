@@ -13,4 +13,4 @@ class FinalMarks(SqlAlchemyBase):
     id_subject = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('subjects.id'))
     mark = sqlalchemy.Column(sqlalchemy.Integer)
 
-    student = orm.relationship('Student')
+    student = orm.relationship('Student', back_populates='final_marks')

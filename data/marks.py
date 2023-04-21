@@ -13,5 +13,5 @@ class Marks(SqlAlchemyBase):
     id_subject = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('subjects.id'))
     mark = sqlalchemy.Column(sqlalchemy.String)  # <--- от 2 до 5; String для поддержки "-" и "+"
 
-    student = orm.relationship('Student')
+    student = orm.relationship('Student', back_populates='marks')
 

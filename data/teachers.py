@@ -16,7 +16,7 @@ class Teacher(SqlAlchemyBase):
     surname = sqlalchemy.Column(sqlalchemy.String)
     hashed_password = sqlalchemy.Column(sqlalchemy.String)
 
-    school = orm.relationship('School')
+    school = orm.relationship('School', back_populates='teachers')
 
     def set_password(self, password):
         self.hashed_password = generate_password_hash(password)
