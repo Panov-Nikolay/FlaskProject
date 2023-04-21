@@ -1,7 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms import PasswordField, StringField, TextAreaField, SubmitField, StringField, SelectField
 from wtforms.validators import DataRequired
-# from data.db_session import create_session, global_init
 from data import db_session
 from data.regions import Region
 from data.schools import School
@@ -15,6 +14,6 @@ class RegisterForm(FlaskForm):
     first_name = StringField('Имя', validators=[DataRequired()])
     last_name = StringField('Фамилия', validators=[DataRequired()])
     surname = StringField('Отчество', validators=[DataRequired()])
-    region = SelectField('Регион', choices=[f'{reg.id} - {reg.title}' for reg in db_sess.query(Region).all()], validators=[DataRequired()])
-    school = SelectField('Школа', choices=['44', '55', '66'], validators=[DataRequired()])
+    region = SelectField('Регион', choices=[f'{reg.id} - {reg.title}' for reg in db_sess.query(Region).all()])
+    school = SelectField('Школа', choices=[], validators=[DataRequired()])
     submit = SubmitField('Зарегистрироваться')
