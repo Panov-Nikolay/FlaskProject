@@ -4,3 +4,6 @@ form {
 .form-control {
     width: 30vw;
 }
+.message {
+    color: red;
+}

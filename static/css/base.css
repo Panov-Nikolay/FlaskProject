@@ -1,16 +1,13 @@
-.login_buttons a{
+.authorization a, span{
     text-decoration: none;
     color: rgba(0,0,0,.9);
 }
-.sign_in, .sign_up {
+.button {
     transition:  0.2s ease;
 }
 
-.sign_in:hover, .sign_up:hover {
+.button:hover {
     color: grey;
-}
-.container {
-    height: 100vh;
 }
 .footer {
     display: flex;

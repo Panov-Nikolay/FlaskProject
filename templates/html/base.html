@@ -14,15 +14,11 @@
 <body>
 <header>
     <nav class="navbar navbar-light bg-light">
-        <a class="navbar-brand" href="#">Электронный дневник</a>
+        <a class="navbar-brand" href="/">Электронный дневник</a>
         <div class="logo">
             <span>{{logo}}</span>
         </div>
-        <div class="login_buttons">
-            <a href="/login" class="sign_in">Вход</a>
-            <span>|</span>
-            <a href="/sign_up_as_teacher" class="sign_up">Регистрация учителя</a>
-        </div>
+        {% block authorization %}{% endblock %}
     </nav>
 </header>
 <main role="main" class="container">

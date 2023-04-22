@@ -4,34 +4,34 @@ from forms.sign_in import LoginForm
 from forms.sing_up import RegisterForm
 from data.students import Student
 from data.teachers import Teacher
-from flask_login import LoginManager, login_user, login_required, logout_user, current_user
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 db_session.global_init("db/magazine.db")
-# login_manager = LoginManager()
-# login_manager.init_app(app)
+
 
 @app.route('/')
 def index():
-    return render_template('html/base.html')
-
+    return render_template('html/start_page.html')
 
 
 @app.route('/select')
 def select():
     return render_template('html/select_user_type.html')
 
-@app.route('/login', methods=['GET', 'POST'])
-def login():
+@app.route('/sign_in', methods=['GET', 'POST'])
+def sign_in():
+    global current_user
     form = LoginForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
-        user = ([db_sess.query(Student).filter(Student.login == form.email.data).first()] +
-                [db_sess.query(Teacher).filter(Teacher.login == form.email.data).first()])
-        if user[0] and user[0].check_password(form.password.data):
-            login_user(user, remember=form.remember_me.data)
-            return redirect("/")
+        user = list(filter(lambda x: x != None, [db_sess.query(Student).filter(Student.login == form.email.data).first()] +
+                [db_sess.query(Teacher).filter(Teacher.login == form.email.data).first()]))[0]
+        if user and user.check_password(form.password.data):
+            current_user = user
+            if user.__class__.__name__ == 'Teacher':
+                return redirect("/teachers_schools")
         return render_template('html/sign_in.html',
                                message="Неправильный логин или пароль",
                                form=form)
@@ -64,6 +64,15 @@ def sign_up_as_teacher():
         return redirect('/')
     return render_template('html/sign_up.html', title='Регистрация', form=form)
 
+@app.route('/teachers_schools', methods=['GET', 'POST'])
+def schools():
+    return render_template('html/teachers_schools.html', user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}')
+
+@app.route('/logout')
+def logout():
+    global current_user
+    current_user = None
+    return redirect('/')
 
 
 if __name__ == '__main__':
