@@ -70,7 +70,7 @@ def sign_up_as_teacher():
 def schools():
     return render_template('html/teachers_school.html',
                            user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
-                           logo=current_user.id_school, classes=['1A', '2A', '3A', '4A', '5A'])
+                           logo=current_user.id_school, classes=['1A', '2A', '3A', '4A', '5A', '6A', '7A', '8A', '9A', '10A', '11A'])
 
 
 @app.route('/teacher_profile', methods=['GET', 'POST'])
@@ -79,6 +79,12 @@ def teacher_profile():
     form = EditForm()
     if form.validate_on_submit():
         db_sess = db_session.create_session()
+        user = db_sess.query(Teacher).filter(Teacher.id == current_user.id).first()
+        user.first_name=form.first_name.data
+        user.last_name=form.last_name.data
+        user.surname=form.surname.data
+        user.id_school=form.school.data
+        user.login=form.email.data
         current_user.first_name=form.first_name.data
         current_user.last_name=form.last_name.data
         current_user.surname=form.surname.data
