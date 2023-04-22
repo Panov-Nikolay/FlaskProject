@@ -4,6 +4,8 @@ from forms.sign_in import LoginForm
 from forms.sing_up import RegisterForm
 from data.students import Student
 from data.teachers import Teacher
+from data.schools import School
+from forms.edit import EditForm
 
 
 app = Flask(__name__)
@@ -31,7 +33,7 @@ def sign_in():
         if user and user.check_password(form.password.data):
             current_user = user
             if user.__class__.__name__ == 'Teacher':
-                return redirect("/teachers_schools")
+                return redirect("/teachers_school")
         return render_template('html/sign_in.html',
                                message="Неправильный логин или пароль",
                                form=form)
@@ -64,9 +66,27 @@ def sign_up_as_teacher():
         return redirect('/')
     return render_template('html/sign_up.html', title='Регистрация', form=form)
 
-@app.route('/teachers_schools', methods=['GET', 'POST'])
+@app.route('/teachers_school', methods=['GET', 'POST'])
 def schools():
-    return render_template('html/teachers_schools.html', user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}')
+    return render_template('html/teachers_school.html',
+                           user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
+                           logo=current_user.id_school, classes=['1A', '2A', '3A', '4A', '5A'])
+
+
+@app.route('/teacher_profile', methods=['GET', 'POST'])
+def teacher_profile():
+    global current_user
+    form = EditForm()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        current_user.first_name=form.first_name.data
+        current_user.last_name=form.last_name.data
+        current_user.surname=form.surname.data
+        current_user.id_school=form.school.data
+        current_user.login=form.email.data
+        db_sess.commit()
+        return redirect('/teachers_school')
+    return render_template('html/teacher_profile.html', form=form, user=current_user)
 
 @app.route('/logout')
 def logout():

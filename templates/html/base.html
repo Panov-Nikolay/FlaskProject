@@ -16,7 +16,7 @@
     <nav class="navbar navbar-light bg-light">
         <a class="navbar-brand" href="/">Электронный дневник</a>
         <div class="logo">
-            <span>{{logo}}</span>
+            <span>{% block logo %}{% endblock %}</span>
         </div>
         {% block authorization %}{% endblock %}
     </nav>

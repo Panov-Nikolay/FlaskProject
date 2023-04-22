@@ -1,0 +1,25 @@
+{% extends "html/base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/teachers_school.css')}}">
+{% endblock %}
+
+{% block authorization %}
+<div class="authorization">
+    <a href="/teacher_profile">{{user}}</a>
+    <span>|</span>
+    <a href="/logout">Выход</a>
+</div>
+{% endblock %}
+
+{% block logo %} {{logo}} {% endblock %}
+
+{% block content %}
+<div class="classes">
+    <datalist>
+    {% for class in classes %}
+        <option>{{class}}</option>
+    {% endfor %}
+    </datalist>
+</div>
+{% endblock %}

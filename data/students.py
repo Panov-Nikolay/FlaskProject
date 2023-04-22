@@ -15,7 +15,7 @@ class Student(SqlAlchemyBase):
     hashed_password = sqlalchemy.Column(sqlalchemy.String)
     id_class = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('classes.id'))
 
-    clas = orm.relationship('Class', back_populates='students')
+    form = orm.relationship('Class', back_populates='students')
     marks = orm.relationship('Marks', back_populates='student')
     final_marks = orm.relationship('FinalMarks', back_populates='student')
 
