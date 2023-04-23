@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet"
+          href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+          integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+          crossorigin="anonymous">
+    <link rel="stylesheet" href="..\css\base_style.css">
+    <title>{{title}}</title>
+</head>
+<body>
+<header>
+    <nav class="navbar navbar-light bg-light">
+        <a class="navbar-brand" href="#">Электронный дневник</a>
+        <div class="logo">
+            <span>типо здесь логотип</span>
+        </div>
+        <div class="login_buttons">
+            <a href="" class="sign_in">Вход</a>
+            <span>|</span>
+            <a href="" class="sign_up">Регистрация</a>
+        </div>
+    </nav>
+</header>
+<!-- Begin page content -->
+<main role="main" class="container">
+    {% block content %}{% endblock %}
+</main>
+<footer>
+    <div class="footer">
+        <span>© Copyright</span>
+    </div>
+</footer>
+</body>
+</html>
