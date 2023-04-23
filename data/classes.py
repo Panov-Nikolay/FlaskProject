@@ -11,5 +11,5 @@ class Class(SqlAlchemyBase):
     title = sqlalchemy.Column(sqlalchemy.String, nullable=True)
     id_school = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('schools.id'))
 
-    school = orm.relationship('School')
-    students = orm.relationship('Student', back_populates='class')
+    school = orm.relationship('School', back_populates='classes')
+    students = orm.relationship('Student', back_populates='form')
