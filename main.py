@@ -29,11 +29,13 @@ def sign_in():
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         user = list(filter(lambda x: x != None, [db_sess.query(Student).filter(Student.login == form.email.data).first()] +
-                [db_sess.query(Teacher).filter(Teacher.login == form.email.data).first()]))[0]
-        if user and user.check_password(form.password.data):
-            current_user = user
-            if user.__class__.__name__ == 'Teacher':
-                return redirect("/teachers_school")
+                [db_sess.query(Teacher).filter(Teacher.login == form.email.data).first()]))
+        if len(user) != 0:
+            user = user[0]
+            if user and user.check_password(form.password.data):
+                current_user = user
+                if user.__class__.__name__ == 'Teacher':
+                    return redirect("/teachers_school")
         return render_template('html/sign_in.html',
                                message="Неправильный логин или пароль",
                                form=form)
