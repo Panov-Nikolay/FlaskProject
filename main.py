@@ -6,6 +6,9 @@ from data.students import Student
 from data.teachers import Teacher
 from data.schools import School
 from forms.edit import EditForm
+from data.classes import Class
+from data.teacher_class import TeacherClass
+from data.subjects import Subjects
 
 
 app = Flask(__name__)
@@ -70,9 +73,14 @@ def sign_up_as_teacher():
 
 @app.route('/teachers_school', methods=['GET', 'POST'])
 def schools():
+    db_sess = db_session.create_session()
+    school = db_sess.query(School).filter(School.id == current_user.id_school).first()
+    classes = []
+    for i in db_sess.query(TeacherClass).filter(TeacherClass.id_teacher == current_user.id).all():
+        classes.append((db_sess.query(Class).filter(Class.id == i.id_class).first(), db_sess.query(Subjects).filter(Subjects.id == i.id_subject).first()))
     return render_template('html/teachers_school.html',
                            user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
-                           logo=current_user.id_school, classes=['1A', '2A', '3A', '4A', '5A', '6A', '7A', '8A', '9A', '10A', '11A'])
+                           logo=school, classes=classes)
 
 
 @app.route('/teacher_profile', methods=['GET', 'POST'])

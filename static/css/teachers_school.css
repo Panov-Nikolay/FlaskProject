@@ -1,18 +1,27 @@
 .classes {
     max-width: 100vw;
 }
-datalist {
-    display: grid;
-    gap: 30px;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    
+.class {
+    width: 40vw;
+    border-radius: 30px;
+    background-color: rgba(0,0,0,.1);
+    text-align: center;
+    color: rgba(0,0,0,.9);
+
+    transition: all 0.2s ease;
 }
-/* .classes {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-} */
-.classes option {
-    height: 100px;
-    width: 100px;
+.column a {
+    text-decoration: none;
+}
+.column {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 5px;
+}
+.class:hover {
+    transform: scale(1.02);
+    color: grey;
+}
+h1 {
+    text-align: center;
 }
