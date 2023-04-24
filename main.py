@@ -6,6 +6,7 @@ from data.students import Student
 from data.teachers import Teacher
 from data.schools import School
 from forms.edit import EditForm
+from random import randint, choice
 
 
 app = Flask(__name__)
@@ -21,6 +22,7 @@ def index():
 @app.route('/select')
 def select():
     return render_template('html/select_user_type.html')
+
 
 @app.route('/sign_in', methods=['GET', 'POST'])
 def sign_in():
@@ -68,6 +70,7 @@ def sign_up_as_teacher():
         return redirect('/')
     return render_template('html/sign_up.html', title='Регистрация', form=form)
 
+
 @app.route('/teachers_school', methods=['GET', 'POST'])
 def schools():
     return render_template('html/teachers_school.html',
@@ -82,19 +85,20 @@ def teacher_profile():
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         user = db_sess.query(Teacher).filter(Teacher.id == current_user.id).first()
-        user.first_name=form.first_name.data
-        user.last_name=form.last_name.data
-        user.surname=form.surname.data
-        user.id_school=form.school.data
-        user.login=form.email.data
-        current_user.first_name=form.first_name.data
-        current_user.last_name=form.last_name.data
-        current_user.surname=form.surname.data
-        current_user.id_school=form.school.data
-        current_user.login=form.email.data
+        user.first_name = form.first_name.data
+        user.last_name = form.last_name.data
+        user.surname = form.surname.data
+        user.id_school = form.school.data
+        user.login = form.email.data
+        current_user.first_name = form.first_name.data
+        current_user.last_name = form.last_name.data
+        current_user.surname = form.surname.data
+        current_user.id_school = form.school.data
+        current_user.login = form.email.data
         db_sess.commit()
         return redirect('/teachers_school')
     return render_template('html/teacher_profile.html', form=form, user=current_user)
+
 
 @app.route('/logout')
 def logout():
@@ -104,4 +108,14 @@ def logout():
 
 
 if __name__ == '__main__':
-    app.run(port=8081, host='127.0.0.1')
+    #  app.run(port=8081, host='127.0.0.1')
+    db_sess = db_session.create_session()
+    for i in range(1, 31):
+        a = db_sess.query(Teacher).filter(Teacher.id == i).first()
+        p = ''
+        d = list('qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM_')
+        for t in range(randint(8, 12)):
+            p += choice(d)
+        print(i, '-', p)
+        a.set_password(p)
+    db_sess.commit()
