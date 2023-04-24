@@ -19,7 +19,7 @@
     <h1>Классы</h1>
     <div class="column">
     {% for class in classes %}
-        <a href="#" class="class">
+        <a href="/teachers_school/{{class[0].id}}/{{class[1].id}}" class="class">
             {{class[0].title}} | {{class[1].title}}
         </a>
     {% endfor %}

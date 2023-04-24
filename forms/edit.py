@@ -7,7 +7,7 @@ from data.schools import School
 class EditForm(FlaskForm):
     db_session.global_init("db/magazine.db")
     db_sess = db_session.create_session()
-    email = StringField('Электронная почта', validators=[DataRequired()])
+    email = StringField('Логин', validators=[DataRequired()])
     first_name = StringField('Имя', validators=[DataRequired()])
     last_name = StringField('Фамилия', validators=[DataRequired()])
     surname = StringField('Отчество', validators=[DataRequired()])

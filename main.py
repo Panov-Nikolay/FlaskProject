@@ -111,5 +111,13 @@ def logout():
     return redirect('/')
 
 
+@app.route('/teachers_school/<int:id_class>/<int:id_subject>', methods=['GET', 'POST'])
+def get_students(id_class, id_subject):
+    db_sess = db_session.create_session()
+    form = (db_sess.query(Class).filter(Class.id == id_class).first(), db_sess.query(Subjects).filter(Subjects.id == id_subject).first())
+    students = db_sess.query(Student).filter(Student.id_class == id_class).all()
+    return render_template('html/students.html', user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
+                           logo=form, students=students)
+
 if __name__ == '__main__':
     app.run(port=8081, host='127.0.0.1')
