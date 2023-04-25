@@ -16,13 +16,24 @@
 
 {% block content %}
 <div class="students">
-    <h1>Ученики</h1>
-    <div class="column">
-    {% for student in students %}
-        <a href="" class="student">
-            {{student.surname}} {{student.first_name}}
-        </a>
-    {% endfor %}
-    </div>
+    <table class="table table-sm table-responsive table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Ученик</th>    
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr>
+                <th>{{student.surname}} {{student.first_name}}</th>
+                {% for mark in marks[student.id] %}
+                <td contenteditable>
+                    {{mark}}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

@@ -1,5 +1,5 @@
 .students {
-    max-width: 100vw;
+    max-width: 100%;
 }
 .student {
     width: 40vw;
@@ -24,4 +24,10 @@
 }
 h1 {
     text-align: center;
+}
+tbody th {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0px;
+    background-color: #fff;
 }
