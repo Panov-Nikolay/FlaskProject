@@ -10,6 +10,7 @@ from data.classes import Class
 from data.teacher_class import TeacherClass
 from data.subjects import Subjects
 from data.marks import Marks
+from forms.save_table import SaveTable
 
 
 app = Flask(__name__)
@@ -115,14 +116,17 @@ def logout():
 @app.route('/teachers_school/<int:id_class>/<int:id_subject>', methods=['GET', 'POST'])
 def get_students(id_class, id_subject):
     db_sess = db_session.create_session()
+    submit_form = SaveTable()
+    if submit_form.validate_on_submit():
+        return redirect('/teachers_school')
     form = (db_sess.query(Class).filter(Class.id == id_class).first(), db_sess.query(Subjects).filter(Subjects.id == id_subject).first())
     students = sorted(db_sess.query(Student).filter(Student.id_class == id_class).all(), key=lambda x: x.surname)
     marks = {}
     for student in students:
         # marks[student.id] = db_sess.query(Marks).filter(Marks.id_student == student.id, Marks.id_subject == id_subject).all()
-        marks[student.id] = '0' * 50
+        marks[student.id] = ' ' * 50
     return render_template('html/students.html', user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
-                           logo=form, students=students, marks=marks)
+                           logo=form, students=students, marks=marks, form=submit_form)
 
 if __name__ == '__main__':
     app.run(port=8081, host='127.0.0.1')

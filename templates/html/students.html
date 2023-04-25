@@ -15,25 +15,29 @@
 {% block logo %} {{logo[0].title}} | {{logo[1].title}} {% endblock %}
 
 {% block content %}
-<div class="students">
-    <table class="table table-sm table-responsive table-bordered">
-        <thead>
-            <tr>
-                <th scope="col">Ученик</th>    
-            </tr>
-        </thead>
-        <tbody>
-            {% for student in students %}
-            <tr>
-                <th>{{student.surname}} {{student.first_name}}</th>
-                {% for mark in marks[student.id] %}
-                <td contenteditable>
-                    {{mark}}
-                </td>
+<form action="" method="post">
+    {{ form.hidden_tag() }}
+    <div class="students">
+        <table class="table table-sm table-responsive table-bordered" id="students_marks">
+            <thead>
+                <tr>
+                    <th scope="col">Ученик</th>    
+                </tr>
+            </thead>
+            <tbody>
+                {% for student in students %}
+                <tr id="student">
+                    <th>{{student.surname}} {{student.first_name}}</th>
+                    {% for mark in marks[student.id] %}
+                    <td contenteditable>
+                        {{mark}}
+                    </td>
+                    {% endfor %}
+                </tr>
                 {% endfor %}
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+    </div>
+</form>
 {% endblock %}

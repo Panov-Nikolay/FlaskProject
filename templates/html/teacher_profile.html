@@ -32,7 +32,7 @@
     </p>
     <p>
         {{ form.school.label }}<br>
-        {{ form.school(class="form-control", value=user.school) }}<br>
+        {{ form.school(class="form-control") }}<br>
         {% for error in form.school.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
