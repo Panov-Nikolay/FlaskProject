@@ -9,6 +9,7 @@ from forms.edit import EditForm
 from data.classes import Class
 from data.teacher_class import TeacherClass
 from data.subjects import Subjects
+from data.marks import Marks
 
 
 app = Flask(__name__)
@@ -74,8 +75,8 @@ def sign_up_as_teacher():
 @app.route('/teachers_school', methods=['GET', 'POST'])
 def schools():
     db_sess = db_session.create_session()
-    school = db_sess.query(School).filter(School.id == current_user.id_school).first()
     classes = []
+    school = db_sess.query(School).filter(School.id == current_user.id_school).first()
     for i in db_sess.query(TeacherClass).filter(TeacherClass.id_teacher == current_user.id).all():
         classes.append((db_sess.query(Class).filter(Class.id == i.id_class).first(), db_sess.query(Subjects).filter(Subjects.id == i.id_subject).first()))
     return render_template('html/teachers_school.html',
@@ -93,12 +94,12 @@ def teacher_profile():
         user.first_name=form.first_name.data
         user.last_name=form.last_name.data
         user.surname=form.surname.data
-        user.id_school=form.school.data
+        user.id_school=int(form.school.data[0])
         user.login=form.email.data
         current_user.first_name=form.first_name.data
         current_user.last_name=form.last_name.data
         current_user.surname=form.surname.data
-        current_user.id_school=form.school.data
+        current_user.id_school= int(form.school.data[0])
         current_user.login=form.email.data
         db_sess.commit()
         return redirect('/teachers_school')
@@ -115,9 +116,13 @@ def logout():
 def get_students(id_class, id_subject):
     db_sess = db_session.create_session()
     form = (db_sess.query(Class).filter(Class.id == id_class).first(), db_sess.query(Subjects).filter(Subjects.id == id_subject).first())
-    students = db_sess.query(Student).filter(Student.id_class == id_class).all()
+    students = sorted(db_sess.query(Student).filter(Student.id_class == id_class).all(), key=lambda x: x.surname)
+    marks = {}
+    for student in students:
+        # marks[student.id] = db_sess.query(Marks).filter(Marks.id_student == student.id, Marks.id_subject == id_subject).all()
+        marks[student.id] = '0' * 50
     return render_template('html/students.html', user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
-                           logo=form, students=students)
+                           logo=form, students=students, marks=marks)
 
 if __name__ == '__main__':
     app.run(port=8081, host='127.0.0.1')
