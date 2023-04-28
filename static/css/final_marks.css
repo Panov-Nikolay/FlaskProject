@@ -1,0 +1,34 @@
+.d2 h1 {text-align: center;}
+.d2 h1:before {
+  content: "";
+  position: absolute;
+  top: calc(50% - 5px);
+  left: 0;
+  right: 0;
+  height: 6px;
+  border-top: 2px solid #9C9CFF;
+  border-bottom: 2px solid #9C9CFF;
+  z-index: -1;
+}
+.d2 span {
+  background: white;
+  padding: 0 20px;
+}
+
+h1 {
+  font-size: 40px;
+  letter-spacing: 1px;
+  max-width: 1500px;
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  color: #9C9CFF;
+  margin-bottom: 50px;
+}
+
+.h3g {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-column-gap: 50px;
+    grid-row-gap: 1em;
+}

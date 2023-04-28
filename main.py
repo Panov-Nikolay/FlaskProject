@@ -10,6 +10,7 @@ from data.classes import Class
 from data.teacher_class import TeacherClass
 from data.subjects import Subjects
 from data.subject_plan import SubjectPlan
+from data.final_marks import FinalMarks
 
 
 app = Flask(__name__)
@@ -155,6 +156,42 @@ def timetable(logo):
     return render_template('html/timetable.html',
                            user=f'{current_user.first_name[0]}. {current_user.last_name[0]}. {current_user.surname}',
                            logo=logo, table=timetable)
+
+
+@app.route('/final_marks_student/<logo>', methods=['GET'])
+def final_marks(logo):
+    db_sess = db_session.create_session()
+    part0 = db_sess.query(FinalMarks).filter(FinalMarks.id_student == current_user.id).all()
+    part1, part2, part3, part4, part_f = [], [], [], [], []
+    for i in part0:
+        print(i, i.part)
+        if i.part == 1:
+            part1.append(i)
+        elif i.part == 2:
+            part2.append(i)
+        elif i.part == 3:
+            part3.append(i)
+        elif i.part == 4:
+            part4.append(i)
+        elif i.part == 5:
+            part_f.append(i)
+    s1, s2, s3, s4, s5 = [], [], [], [], []
+    for i in range(len(part1)):
+        s1.append([db_sess.query(Subjects).filter(Subjects.id == part1[i].id_subject).first().title, part1[i].mark])
+        s2.append([db_sess.query(Subjects).filter(Subjects.id == part2[i].id_subject).first().title, part2[i].mark])
+        s3.append([db_sess.query(Subjects).filter(Subjects.id == part3[i].id_subject).first().title, part3[i].mark])
+        s4.append([db_sess.query(Subjects).filter(Subjects.id == part4[i].id_subject).first().title, part4[i].mark])
+        s5.append([db_sess.query(Subjects).filter(Subjects.id == part_f[i].id_subject).first().title, part_f[i].mark])
+    s1.sort(key=lambda x: x[0])
+    s2.sort(key=lambda x: x[0])
+    s3.sort(key=lambda x: x[0])
+    s4.sort(key=lambda x: x[0])
+    s5.sort(key=lambda x: x[0])
+    logo = logo[2:-2].split(',')
+    logo = logo[0][:-1] + ', ' + logo[1][2:]
+    return render_template('html/final_marks.html',
+                           user=f'{current_user.first_name[0]}. {current_user.last_name[0]}. {current_user.surname}',
+                           logo=logo, marks=[s1, s2, s3, s4, s5])
 
 
 if __name__ == '__main__':

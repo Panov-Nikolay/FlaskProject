@@ -8,8 +8,7 @@ class FinalMarks(SqlAlchemyBase):
 
     id = sqlalchemy.Column(sqlalchemy.Integer, primary_key=True, autoincrement=True)
     id_student = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('students.id'))
-    part = sqlalchemy.Column(sqlalchemy.String)  # <--- четверть / полугодие / год == a / b / c + её номер
-    # a2 = вторая четверть; b1 = первое полугодие
+    part = sqlalchemy.Column(sqlalchemy.Integer)
     id_subject = sqlalchemy.Column(sqlalchemy.Integer, sqlalchemy.ForeignKey('subjects.id'))
     mark = sqlalchemy.Column(sqlalchemy.Integer)
 
