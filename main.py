@@ -9,7 +9,7 @@ from forms.edit import EditForm
 from data.classes import Class
 from data.teacher_class import TeacherClass
 from data.subjects import Subjects
-from random import randint, choice
+from data.subject_plan import SubjectPlan
 
 
 app = Flask(__name__)
@@ -138,9 +138,23 @@ def student_start():
                            logo=[school.title, class1.title])
 
 
-@app.route('/student_marks<int:id_class>/<int:id_student>', methods=['GET'])
+@app.route('/student_marks/<int:id_class>/<int:id_student>', methods=['GET'])
 def student_marks(id_class, id_student):
     db_sess = db_session.create_session()
+
+
+@app.route('/timetable/<logo>', methods=['GET'])
+def timetable(logo):
+    db_sess = db_session.create_session()
+    lessons = db_sess.query(SubjectPlan).filter(SubjectPlan.id_class == current_user.id_class).all()
+    timetable = [{} for _ in range(6)]
+    logo = logo[2:-2].split(',')
+    logo = logo[0][:-1] + ', ' + logo[1][2:]
+    for i in lessons:
+        timetable[i.day - 1][i.lesson] = db_sess.query(Subjects).filter(i.id_subject == Subjects.id).first().title
+    return render_template('html/timetable.html',
+                           user=f'{current_user.first_name[0]}. {current_user.last_name[0]}. {current_user.surname}',
+                           logo=logo, table=timetable)
 
 
 if __name__ == '__main__':

@@ -1,0 +1,73 @@
+{% extends "html/base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/timetable.css')}}">
+{% endblock %}
+
+{% block authorization %}
+<div class="authorization">
+    <a href="/teacher_profile">{{user}}</a>
+    <span>|</span>
+    <a href="/logout">Выход</a>
+</div>
+{% endblock %}
+
+{% block logo %} {{logo + " класс"}} {% endblock %}
+
+{% block content %}
+<div>
+    <div class="d2">
+        <h1><span>Расписание уроков</span></h1>
+    </div>
+
+    <div class="table">
+        <div><h3>Понедельник</h3>
+        <ol class="rounded">
+            {% for i in table[0].keys() %}
+                <li><a>{{table[0][i]}}</a></li>
+            {% endfor %}
+        </ol>
+        </div>
+        <div>
+            <h3>Вторник</h3>
+        <ol class="rounded">
+            {% for i in table[1].keys() %}
+                <li><a>{{table[1][i]}}</a></li>
+            {% endfor %}
+        </ol>
+        </div>
+        <div>
+            <h3>Среда</h3>
+        <ol class="rounded">
+            {% for i in table[2].keys() %}
+                <li><a>{{table[2][i]}}</a></li>
+            {% endfor %}
+        </ol>
+        </div>
+        <div>
+            <h3>Четверг</h3>
+            <ol class="rounded">
+            {% for i in table[3].keys() %}
+                <li><a>{{table[3][i]}}</a></li>
+            {% endfor %}
+            </ol>
+        </div>
+        <div>
+            <h3>Пятница</h3>
+            <ol class="rounded">
+            {% for i in table[4].keys() %}
+                <li><a>{{table[4][i]}}</a></li>
+            {% endfor %}
+            </ol>
+        </div>
+        <div>
+            <h3>Суббота</h3>
+        <ol class="rounded">
+            {% for i in table[5].keys() %}
+                <li><a>{{table[5][i]}}</a></li>
+            {% endfor %}
+        </ol>
+        </div>
+    </div>
+</div>
+{% endblock %}

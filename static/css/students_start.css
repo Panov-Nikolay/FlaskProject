@@ -8,3 +8,9 @@ button {
     border-color: #7777FF;
     padding: 5px 20px;
 }
+
+.but {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-column-gap: 50px;
+}

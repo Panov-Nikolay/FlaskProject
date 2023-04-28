@@ -1,0 +1,29 @@
+{% extends "html/base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/students_start.css')}}">
+{% endblock %}
+
+{% block authorization %}
+<div class="authorization">
+    <a href="/teacher_profile">{{user}}</a>
+    <span>|</span>
+    <a href="/logout">Выход</a>
+</div>
+{% endblock %}
+
+{% block logo %} {{logo[0] + ", " + logo[1] + " класс"}} {% endblock %}
+
+{% block content %}
+<div class="but">
+    <a href="/student_marks">
+        <button name="marks">Текущие оценки</button>
+    </a>
+    <a href="/student_final_marks">
+        <button name="final_marks">Итоговые оценки</button>
+    </a>
+    <a href="/timetable/{{logo}}">
+        <button name="timetable">Расписание уроков</button>
+    </a>
+</div>
+{% endblock %}

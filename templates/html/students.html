@@ -1,0 +1,28 @@
+{% extends "html/base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/students.css')}}">
+{% endblock %}
+
+{% block authorization %}
+<div class="authorization">
+    <a href="/teacher_profile">{{user}}</a>
+    <span>|</span>
+    <a href="/logout">Выход</a>
+</div>
+{% endblock %}
+
+{% block logo %} {{logo[0].title}} | {{logo[1].title}} {% endblock %}
+
+{% block content %}
+<div class="students">
+    <h1>Ученики</h1>
+    <div class="column">
+    {% for student in students %}
+        <a href="" class="student">
+            {{student.surname}} {{student.first_name}}
+        </a>
+    {% endfor %}
+    </div>
+</div>
+{% endblock %}
