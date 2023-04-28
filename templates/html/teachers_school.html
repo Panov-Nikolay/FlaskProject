@@ -12,15 +12,17 @@
 </div>
 {% endblock %}
 
-{% block logo %} {{logo}} {% endblock %}
+{% block logo %} {{logo.title}} {% endblock %}
 
 {% block content %}
 <div class="classes">
     <h1>Классы</h1>
-    <datalist>
+    <div class="column">
     {% for class in classes %}
-        <option>{{class}}</option>
+        <a href="/teachers_school/{{class[0].id}}/{{class[1].id}}" class="class">
+            {{class[0].title}} | {{class[1].title}}
+        </a>
     {% endfor %}
-    </datalist>
+    </div>
 </div>
 {% endblock %}

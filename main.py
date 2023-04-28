@@ -6,6 +6,9 @@ from data.students import Student
 from data.teachers import Teacher
 from data.schools import School
 from forms.edit import EditForm
+from data.classes import Class
+from data.teacher_class import TeacherClass
+from data.subjects import Subjects
 from random import randint, choice
 
 
@@ -38,6 +41,8 @@ def sign_in():
                 current_user = user
                 if user.__class__.__name__ == 'Teacher':
                     return redirect("/teachers_school")
+                if user.__class__.__name__ == 'Student':
+                    return redirect("/student_start")
         return render_template('html/sign_in.html',
                                message="Неправильный логин или пароль",
                                form=form)
@@ -73,9 +78,14 @@ def sign_up_as_teacher():
 
 @app.route('/teachers_school', methods=['GET', 'POST'])
 def schools():
+    db_sess = db_session.create_session()
+    school = db_sess.query(School).filter(School.id == current_user.id_school).first()
+    classes = []
+    for i in db_sess.query(TeacherClass).filter(TeacherClass.id_teacher == current_user.id).all():
+        classes.append((db_sess.query(Class).filter(Class.id == i.id_class).first(), db_sess.query(Subjects).filter(Subjects.id == i.id_subject).first()))
     return render_template('html/teachers_school.html',
-                           user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
-                           logo=current_user.id_school, classes=['1A', '2A', '3A', '4A', '5A', '6A', '7A', '8A', '9A', '10A', '11A'])
+                           user=f'{current_user.first_name[0]}. {current_user.last_name[0]}. {current_user.surname}',
+                           logo=school, classes=classes)
 
 
 @app.route('/teacher_profile', methods=['GET', 'POST'])
@@ -85,16 +95,16 @@ def teacher_profile():
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         user = db_sess.query(Teacher).filter(Teacher.id == current_user.id).first()
-        user.first_name = form.first_name.data
-        user.last_name = form.last_name.data
-        user.surname = form.surname.data
-        user.id_school = form.school.data
-        user.login = form.email.data
-        current_user.first_name = form.first_name.data
-        current_user.last_name = form.last_name.data
-        current_user.surname = form.surname.data
-        current_user.id_school = form.school.data
-        current_user.login = form.email.data
+        user.first_name=form.first_name.data
+        user.last_name=form.last_name.data
+        user.surname=form.surname.data
+        user.id_school=form.school.data
+        user.login=form.email.data
+        current_user.first_name=form.first_name.data
+        current_user.last_name=form.last_name.data
+        current_user.surname=form.surname.data
+        current_user.id_school=form.school.data
+        current_user.login=form.email.data
         db_sess.commit()
         return redirect('/teachers_school')
     return render_template('html/teacher_profile.html', form=form, user=current_user)
@@ -107,15 +117,31 @@ def logout():
     return redirect('/')
 
 
-if __name__ == '__main__':
-    #  app.run(port=8081, host='127.0.0.1')
+@app.route('/teachers_school/<int:id_class>/<int:id_subject>', methods=['GET', 'POST'])
+def get_students(id_class, id_subject):
     db_sess = db_session.create_session()
-    for i in range(1, 31):
-        a = db_sess.query(Teacher).filter(Teacher.id == i).first()
-        p = ''
-        d = list('qwertyuiopasdfghjklzxcvbnm1234567890QWERTYUIOPASDFGHJKLZXCVBNM_')
-        for t in range(randint(8, 12)):
-            p += choice(d)
-        print(i, '-', p)
-        a.set_password(p)
-    db_sess.commit()
+    form = (db_sess.query(Class).filter(Class.id == id_class).first(), db_sess.query(Subjects).filter(Subjects.id == id_subject).first())
+    students = db_sess.query(Student).filter(Student.id_class == id_class).all()
+    return render_template('html/students.html', user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
+                           logo=form, students=students)
+
+
+@app.route('/student_start', methods=['GET'])
+def student_start():
+    db_sess = db_session.create_session()
+    class_id = db_sess.query(Student).filter(Student.id == current_user.id).first().id_class
+    class1 = db_sess.query(Class).filter(Class.id == class_id).first()
+    school_id = class1.id_school
+    school = db_sess.query(School).filter(School.id == school_id).first()
+    return render_template('html/student_start.html',
+                           user=f'{current_user.first_name[0]}. {current_user.last_name[0]}. {current_user.surname}',
+                           logo=[school.title, class1.title])
+
+
+@app.route('/student_marks<int:id_class>/<int:id_student>', methods=['GET'])
+def student_marks(id_class, id_student):
+    db_sess = db_session.create_session()
+
+
+if __name__ == '__main__':
+    app.run(port=8081, host='127.0.0.1')
