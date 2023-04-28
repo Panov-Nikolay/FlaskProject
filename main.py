@@ -11,6 +11,7 @@ from data.teacher_class import TeacherClass
 from data.subjects import Subjects
 from data.marks import Marks
 from forms.save_table import SaveTable
+import datetime
 
 
 app = Flask(__name__)
@@ -121,12 +122,13 @@ def get_students(id_class, id_subject):
         return redirect('/teachers_school')
     form = (db_sess.query(Class).filter(Class.id == id_class).first(), db_sess.query(Subjects).filter(Subjects.id == id_subject).first())
     students = sorted(db_sess.query(Student).filter(Student.id_class == id_class).all(), key=lambda x: x.surname)
+    dates = list(map(lambda x: x[0].strftime('%d.%m.%Y'), sorted(db_sess.query(Marks.date).filter(Marks.id_subject == id_subject).all())))
     marks = {}
     for student in students:
-        # marks[student.id] = db_sess.query(Marks).filter(Marks.id_student == student.id, Marks.id_subject == id_subject).all()
-        marks[student.id] = ' ' * 50
+        marks[student.id] = list(map(lambda x: x.mark, sorted(db_sess.query(Marks).filter(Marks.id_student == student.id, Marks.id_subject == id_subject).all(), key=lambda x: x.date)))
+        marks[student.id] = marks[student.id] + [''] * (len(dates) - len(marks[student.id]))
     return render_template('html/students.html', user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
-                           logo=form, students=students, marks=marks, form=submit_form)
+                           logo=form, students=students, marks=marks, form=submit_form, dates=dates)
 
 if __name__ == '__main__':
     app.run(port=8081, host='127.0.0.1')

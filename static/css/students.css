@@ -31,3 +31,6 @@ tbody th {
     left: 0px;
     background-color: #fff;
 }
+.container {
+    justify-content: start;
+}

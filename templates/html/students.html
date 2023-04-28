@@ -18,10 +18,15 @@
 <form action="" method="post">
     {{ form.hidden_tag() }}
     <div class="students">
-        <table class="table table-sm table-responsive table-bordered" id="students_marks">
+        <table class="table table-sm table-responsive table-bordered">
             <thead>
                 <tr>
-                    <th scope="col">Ученик</th>    
+                    <th scope="col">Ученик</th>
+                    {% for date in dates %}
+                    <td class="date">
+                        {{date}}
+                    </td>
+                    {% endfor %}
                 </tr>
             </thead>
             <tbody>
