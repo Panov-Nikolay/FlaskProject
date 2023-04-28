@@ -1,0 +1,78 @@
+{% extends "html/base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/final_marks.css')}}">
+{% endblock %}
+
+{% block authorization %}
+<div class="authorization">
+    <a href="/teacher_profile">{{user}}</a>
+    <span>|</span>
+    <a href="/logout">Выход</a>
+</div>
+{% endblock %}
+
+{% block logo %} {{logo + " класс"}} {% endblock %}
+
+{% block content %}
+<div>
+    <div class="d2"><h1><span>Итоговые оценки</span></h1></div>
+    <div class="h3g">
+        <div>
+            <h3>I четверть</h3>
+            <table>
+            {% for i in marks[0] %}
+                <tr>
+                    <th>{{i[0]}}</th>
+                    <td>5+</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+        <div>
+            <h3>II четверть</h3>
+            <table>
+            {% for i in marks[1] %}
+                <tr>
+                    <th>{{i[0]}}</th>
+                    <td>5+</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+        <div>
+            <h3>III четверть</h3>
+            <table>
+            {% for i in marks[2] %}
+                <tr>
+                    <th>{{i[0]}}</th>
+                    <td>5+</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+        <div>
+            <h3>IV четверть</h3>
+            <table>
+            {% for i in marks[3] %}
+                <tr>
+                    <th>{{i[0]}}</th>
+                    <td>5+</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+        <div>
+            <h3>Годовая оценка</h3>
+            <table>
+            {% for i in marks[4] %}
+                <tr>
+                    <th>{{i[0]}}</th>
+                    <td>5+</td>
+                </tr>
+            {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
