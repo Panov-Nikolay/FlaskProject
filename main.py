@@ -5,7 +5,7 @@ from forms.sing_up import RegisterForm
 from data.students import Student
 from data.teachers import Teacher
 from data.schools import School
-from forms.edit import EditForm
+from forms.edit import EditForm, EditFormS
 from data.classes import Class
 from data.teacher_class import TeacherClass
 from data.subjects import Subjects
@@ -85,8 +85,9 @@ def schools():
     school = db_sess.query(School).filter(School.id == current_user.id_school).first()
     classes = []
     for i in db_sess.query(TeacherClass).filter(TeacherClass.id_teacher == current_user.id).all():
-        classes.append((db_sess.query(Class).filter(Class.id == i.id_class).first(), db_sess.query(Subjects).filter(Subjects.id == i.id_subject).first()))
-    return render_template('html/teachers_school.html',
+        classes.append((db_sess.query(Class).filter(Class.id == i.id_class).first(),
+                        db_sess.query(Subjects).filter(Subjects.id == i.id_subject).first()))
+    return render_template('html/teachers_school.html', title='Выбор класса',
                            user=f'{current_user.first_name[0]}. {current_user.last_name[0]}. {current_user.surname}',
                            logo=school, classes=classes)
 
@@ -98,19 +99,19 @@ def teacher_profile():
     if form.validate_on_submit():
         db_sess = db_session.create_session()
         user = db_sess.query(Teacher).filter(Teacher.id == current_user.id).first()
-        user.first_name=form.first_name.data
-        user.last_name=form.last_name.data
-        user.surname=form.surname.data
-        user.id_school=form.school.data
-        user.login=form.email.data
-        current_user.first_name=form.first_name.data
-        current_user.last_name=form.last_name.data
-        current_user.surname=form.surname.data
-        current_user.id_school=form.school.data
-        current_user.login=form.email.data
+        user.first_name = form.first_name.data
+        user.last_name = form.last_name.data
+        user.surname = form.surname.data
+        user.id_school = db_sess.query(School).filter(School.title == form.school.data).first().id
+        user.login = form.email.data
+        current_user.first_name = form.first_name.data
+        current_user.last_name = form.last_name.data
+        current_user.surname = form.surname.data
+        current_user.id_school = db_sess.query(School).filter(School.title == form.school.data).first().id
+        current_user.login = form.email.data
         db_sess.commit()
         return redirect('/teachers_school')
-    return render_template('html/teacher_profile.html', form=form, user=current_user)
+    return render_template('html/teacher_profile.html', title='Профиль', form=form, user=current_user)
 
 
 @app.route('/logout')
@@ -123,9 +124,11 @@ def logout():
 @app.route('/teachers_school/<int:id_class>/<int:id_subject>', methods=['GET', 'POST'])
 def get_students(id_class, id_subject):
     db_sess = db_session.create_session()
-    form = (db_sess.query(Class).filter(Class.id == id_class).first(), db_sess.query(Subjects).filter(Subjects.id == id_subject).first())
+    form = (db_sess.query(Class).filter(Class.id == id_class).first(),
+            db_sess.query(Subjects).filter(Subjects.id == id_subject).first())
     students = db_sess.query(Student).filter(Student.id_class == id_class).all()
-    return render_template('html/students.html', user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
+    return render_template('html/students.html',
+                           user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
                            logo=form, students=students)
 
 
@@ -136,7 +139,7 @@ def student_start():
     class1 = db_sess.query(Class).filter(Class.id == class_id).first()
     school_id = class1.id_school
     school = db_sess.query(School).filter(School.id == school_id).first()
-    return render_template('html/student_start.html',
+    return render_template('html/student_start.html', title=f'{current_user.surname} {current_user.first_name}',
                            user=f'{current_user.first_name[0]}. {current_user.last_name[0]}. {current_user.surname}',
                            logo=[school.title, class1.title])
 
@@ -155,7 +158,7 @@ def timetable(logo):
     logo = logo[0][:-1] + ', ' + logo[1][2:]
     for i in lessons:
         timetable[i.day - 1][i.lesson] = db_sess.query(Subjects).filter(i.id_subject == Subjects.id).first().title
-    return render_template('html/timetable.html',
+    return render_template('html/timetable.html', title='Расписание уроков',
                            user=f'{current_user.first_name[0]}. {current_user.last_name[0]}. {current_user.surname}',
                            logo=logo, table=timetable)
 
@@ -191,9 +194,32 @@ def final_marks(logo):
     s5.sort(key=lambda x: x[0])
     logo = logo[2:-2].split(',')
     logo = logo[0][:-1] + ', ' + logo[1][2:]
-    return render_template('html/final_marks.html',
+    return render_template('html/final_marks.html', title='Итоговые оценки',
                            user=f'{current_user.first_name[0]}. {current_user.last_name[0]}. {current_user.surname}',
                            logo=logo, marks=[s1, s2, s3, s4, s5])
+
+
+@app.route('/student_profile', methods=['GET', 'POST'])
+def student_profile():
+    form = EditFormS()
+    if form.validate_on_submit():
+        db_sess = db_session.create_session()
+        user = db_sess.query(Student).filter(Student.id == current_user.id).first()
+        user.first_name = form.first_name.data
+        user.last_name = form.last_name.data
+        user.surname = form.surname.data
+        user.id_school = db_sess.query(School).filter(School.title == form.school.data).first().id
+        user.id_class = db_sess.query(Class).filter(Class.title == form.class1.data).first().id
+        user.login = form.email.data
+        current_user.first_name = form.first_name.data
+        current_user.last_name = form.last_name.data
+        current_user.surname = form.surname.data
+        current_user.id_school = db_sess.query(School).filter(School.title == form.school.data).first().id
+        current_user.id_class = db_sess.query(Class).filter(Class.title == form.class1.data).first().id
+        current_user.login = form.email.data
+        db_sess.commit()
+        return redirect('/student_start')
+    return render_template('html/student_profile.html', title='Профиль', form=form, user=current_user)
 
 
 if __name__ == '__main__':

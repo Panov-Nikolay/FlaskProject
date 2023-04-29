@@ -15,7 +15,8 @@ class RegisterForm(FlaskForm):
     first_name = StringField('Имя', validators=[DataRequired()])
     surname = StringField('Фамилия', validators=[DataRequired()])
     last_name = StringField('Отчество', validators=[DataRequired()])
-    region = SelectField('Регион', choices=[f'{reg.id} - {reg.title}' for reg in db_sess.query(Region).all()], validators=[DataRequired()])
-    # school = SelectField('Школа', choices=[f'{sch.id} - {sch.title}' for sch in db_sess.query(School).all()], validators=[DataRequired()])
-    school = SelectField('Школа', choices=['Школа 1', 'Школа 2'], validators=[DataRequired()])
+    region = SelectField('Регион', choices=[f'{reg.id} - {reg.title}' for reg in db_sess.query(Region).all()],
+                         validators=[DataRequired()])
+    school = SelectField('Школа', choices=[f'{sch.id} - {sch.title}' for sch in db_sess.query(School).all()],
+                         validators=[DataRequired()])
     submit = SubmitField('Зарегистрироваться')

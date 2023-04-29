@@ -3,7 +3,7 @@
 {% block content %}
 <form action="" class="profile", method="post">
     {{ form.hidden_tag() }}
-    <p>
+     <p>
         {{ form.surname.label }}<br>
         {{ form.surname(class="form-control", value=user.surname) }}<br>
         {% for error in form.surname.errors %}
@@ -34,6 +34,15 @@
         {{ form.school.label }}<br>
         {{ form.school(class="form-control", value=user.id_school) }}<br>
         {% for error in form.school.errors %}
+            <p class="alert alert-danger" role="alert">
+                {{ error }}
+            </p>
+        {% endfor %}
+    </p>
+    <p>
+        {{ form.class1.label }}<br>
+        {{ form.class1(class="form-control", value=user.id_class) }}<br>
+        {% for error in form.class1.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
             </p>

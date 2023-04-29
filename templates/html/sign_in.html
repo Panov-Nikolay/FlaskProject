@@ -5,7 +5,9 @@
 {% endblock %}
 
 {% block content %}
-    <form action="" method="post">
+<div>
+    <div class="d2"><h1><span>Вход в аккаунт</span></h1></div>
+    <div><form action="" method="post">
         {{ form.hidden_tag() }}
         <p>
             {{ form.email.label }}<br>
@@ -27,5 +29,6 @@
         </p>
         <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
         <div class="message">{{ message }}</div>
-    </form>
+    </form></div>
+</div>
 {% endblock %}
