@@ -30,7 +30,11 @@ tbody th {
     position: sticky;
     left: 0px;
     background-color: #fff;
+    z-index: 100;
 }
 .container {
     justify-content: start;
+}
+.student td {
+    justify-content: center;
 }

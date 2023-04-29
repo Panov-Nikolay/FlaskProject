@@ -18,6 +18,7 @@
 <form action="" method="post">
     {{ form.hidden_tag() }}
     <div class="students">
+        
         <table class="table table-sm table-responsive table-bordered">
             <thead>
                 <tr>
@@ -34,15 +35,34 @@
                 <tr id="student">
                     <th>{{student.surname}} {{student.first_name}}</th>
                     {% for mark in marks[student.id] %}
-                    <td contenteditable>
-                        {{mark}}
+                    <td>
+                        <div class="modal fade" id="edit_mark" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h1 class="modal-title fs-5" id="exampleModalLabel">Изменение оценки</h1>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    {{form.mark(class='form-control', value=mark)}}
+                                    {{form.id_student(class='form-control', value=student.id, type='hidden')}}
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+                                  <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+                                </div>
+                              </div>
+                            </div>
+                        </div>
+                        <button type='button' class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_mark">{{mark}}</button>
                     </td>
                     {% endfor %}
                 </tr>
                 {% endfor %}
             </tbody>
         </table>
-        <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
+        
     </div>
 </form>
 {% endblock %}
