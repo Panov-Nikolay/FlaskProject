@@ -34,7 +34,7 @@
                 {% for student in students %}
                 <tr id="student">
                     <th>{{student.surname}} {{student.first_name}}</th>
-                    {% for mark in marks[student.id] %}
+                    {% for date in dates %}
                     <td>
                         <div class="modal fade" id="edit_mark" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
@@ -44,18 +44,20 @@
                                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                                 <div class="modal-body">
-                                    {{form.mark(class='form-control', value=mark)}}
-                                    {{form.id_student(class='form-control', value=student.id, type='hidden')}}
+                                    
+                                        {{form.mark(class='form-control', value=marks[student.id].get(date, ''))}}
+                                        {{form.id_student(class='form-control', value=student.id, type='hidden')}}
+                                        {{form.date(class='form-control', value=date)}}
+
                                 </div>
                                 <div class="modal-footer">
                                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                   <p>{{ form.submit(type="submit", class="btn btn-primary") }}</p>
-                                  <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
                                 </div>
                               </div>
                             </div>
                         </div>
-                        <button type='button' class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_mark">{{mark}}</button>
+                        <button type='button' class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_mark">{{marks[student.id].get(date, '')}}</button>
                     </td>
                     {% endfor %}
                 </tr>
