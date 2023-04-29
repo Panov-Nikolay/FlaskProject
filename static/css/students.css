@@ -1,40 +1,13 @@
 .students {
     max-width: 100%;
 }
-.student {
-    width: 40vw;
-    border-radius: 30px;
-    background-color: rgba(0,0,0,.1);
-    text-align: center;
-    color: rgba(0,0,0,.9);
-
-    transition: all 0.2s ease;
-}
-.column a {
-    text-decoration: none;
-}
-.column {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 5px;
-}
-.student:hover {
-    transform: scale(1.02);
-    color: grey;
-}
-h1 {
-    text-align: center;
-}
-tbody th {
+#student th {
     position: -webkit-sticky;
     position: sticky;
     left: 0px;
-    background-color: #fff;
+    background-color: white;
     z-index: 100;
 }
 .container {
     justify-content: start;
-}
-.student td {
-    justify-content: center;
 }

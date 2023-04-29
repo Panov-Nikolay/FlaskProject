@@ -82,7 +82,7 @@ def schools():
     for i in db_sess.query(TeacherClass).filter(TeacherClass.id_teacher == current_user.id).all():
         classes.append((db_sess.query(Class).filter(Class.id == i.id_class).first(), db_sess.query(Subjects).filter(Subjects.id == i.id_subject).first()))
     return render_template('html/teachers_school.html',
-                           user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
+                           user=f'{current_user.first_name[0]}. {current_user.last_name[0]}. {current_user.surname}',
                            logo=school, classes=classes)
 
 
@@ -120,8 +120,18 @@ def get_students(id_class, id_subject):
     submit_form = SaveMark()
     if submit_form.validate_on_submit():
         db_sess = db_session.create_session()
-        mark = db_sess.query(Marks).filter(Marks.id_student == submit_form.id_student.data, Marks.id_subject == id_subject).first()
-        mark.mark = submit_form.mark.data
+        mark = db_sess.query(Marks).filter(Marks.id_student == submit_form.id_student.data, Marks.id_subject == id_subject, Marks.date == datetime.date(year=int(submit_form.date.data.split('.')[2]), month=int(submit_form.date.data.split('.')[1]), day=int(submit_form.date.data.split('.')[0]))).first()
+        if mark == None:
+            mark = Marks(
+                mark = submit_form.mark.data,
+                id_student = int(submit_form.id_student.data),
+                id_subject = id_subject,
+                date = datetime.date(year=int(submit_form.date.data.split('.')[2]), month=int(submit_form.date.data.split('.')[1]), day=int(submit_form.date.data.split('.')[0]))
+            )
+            db_sess.add(mark)
+        else:
+            mark.mark = submit_form.mark.data
+        
         db_sess.commit()
         return redirect(f'/teachers_school/{id_class}/{id_subject}')
     form = (db_sess.query(Class).filter(Class.id == id_class).first(), db_sess.query(Subjects).filter(Subjects.id == id_subject).first())
@@ -132,8 +142,7 @@ def get_students(id_class, id_subject):
         marks[student.id] = {}
         for mark in sorted(db_sess.query(Marks).filter(Marks.id_student == student.id, Marks.id_subject == id_subject).all(), key=lambda x: x.date):
             marks[student.id][mark.date.strftime('%d.%m.%Y')] = mark.mark
-    print(marks)
-    return render_template('html/students.html', user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
+    return render_template('html/students.html', user=f'{current_user.first_name[0]}. {current_user.last_name[0]}. {current_user.surname}',
                            logo=form, students=students, marks=marks, form=submit_form, dates=dates)
 
 if __name__ == '__main__':
