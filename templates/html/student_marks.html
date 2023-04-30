@@ -12,7 +12,7 @@
 </div>
 {% endblock %}
 
-{% block logo %} {{logo.surname}} {{logo.name}} {% endblock %}
+{% block logo %} {{logo.surname}}  {{logo.first_name}} {% endblock %}
 
 {% block content %}
 <div class="students">
@@ -39,8 +39,8 @@
                       <p>{{marks[lesson.id].get(date, '')}}</p>
                   </td>
                 {% endfor %}
-                <th>{{res_marks[lesson]}}</th>
-                <th class="sr">{{sr_marks[lesson]}}</th>
+                <th>{{res_marks[lesson.id]}}</th>
+                <th class="sr">{{sr_marks[lesson.id]}}</th>
             </tr>
             {% endfor %}
         </tbody>

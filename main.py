@@ -235,7 +235,7 @@ def student_marks(id_student, part):
         marks[lesson.id] = {}
         sum_mark = 0
         col_mark = 0
-        for mark in sorted(db_sess.query(Marks).filter(Marks.id_student == student.id,
+        for mark in sorted(db_sess.query(Marks).filter(Marks.id_student == student.id, Marks.id_subject == lesson.id,
                                                        date1 < Marks.date, date2 > Marks.date).all(),
                            key=lambda x: x.date):
             marks[lesson.id][mark.date.strftime('%d.%m.%Y')] = mark.mark
@@ -248,10 +248,10 @@ def student_marks(id_student, part):
                 sum_mark += m
                 col_mark += 1
         if col_mark != 0:
-            sr_marks[student] = str(round(sum_mark / col_mark, 2))
-            res_marks[student] = str(round(sum_mark / col_mark + 0.01))
+            sr_marks[lesson.id] = str(round(sum_mark / col_mark, 2))
+            res_marks[lesson.id] = str(round(sum_mark / col_mark + 0.01))
         else:
-            sr_marks[student] = str(0)
+            sr_marks[lesson.id] = str(0)
     return render_template('html/student_marks.html', logo=student,
                            user=f'{student.first_name[0]}. {student.last_name[0]}. {student.surname}',
                            title=f'Оценки, {student.surname} {student.first_name}', marks=marks, dates=dates,
