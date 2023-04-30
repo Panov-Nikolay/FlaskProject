@@ -1,0 +1,28 @@
+{% extends "html/base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/change_part.css')}}">
+{% endblock %}
+
+{% block authorization %}
+<div class="authorization">
+    <a href="/teacher_profile">{{user}}</a>
+    <span>|</span>
+    <a href="/logout">Выход</a>
+</div>
+{% endblock %}
+
+{% block logo %} {{logo}} {% endblock %}
+
+{% block content %}
+<div>
+    <div class="d2"><h1><span>Выбор четверти</span></h1></div>
+    <div class="but">
+        <h2>Оценки, {{student.surname}} {{student.first_name}}</h2>
+        <button class="b1"><a href="/student_marks/{{student.id}}/{{1}}">I четверть</a></button>
+        <button class="b1"><a href="/student_marks/{{student.id}}/{{2}}">II четверть</a></button>
+        <button class="b1"><a href="/student_marks/{{student.id}}/{{3}}">III четверть</a></button>
+        <button class="b1"><a href="/student_marks/{{student.id}}/{{4}}">IV четверть</a></button>
+    </div>
+</div>
+{% endblock %}

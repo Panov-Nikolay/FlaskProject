@@ -1,0 +1,49 @@
+{% extends "html/base.html" %}
+
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/students.css')}}">
+{% endblock %}
+
+{% block authorization %}
+<div class="authorization">
+    <a href="/student_profile">{{user}}</a>
+    <span>|</span>
+    <a href="/logout">Выход</a>
+</div>
+{% endblock %}
+
+{% block logo %} {{logo.surname}} {{logo.name}} {% endblock %}
+
+{% block content %}
+<div class="students">
+
+    <table class="table table-sm table-responsive">
+        <thead>
+            <tr>
+                <th scope="col">Предмет</th>
+                {% for date in dates %}
+                <td class="date">
+                    {{date}}
+                </td>
+                {% endfor %}
+                <th>Четвертная оценка</th>
+                <th>Средний балл</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for lesson in lessons %}
+            <tr id="lesson">
+                <th>{{lesson.title}}</th>
+                {% for date in dates %}
+                  <td>
+                      <p>{{marks[lesson.id].get(date, '')}}</p>
+                  </td>
+                {% endfor %}
+                <th>{{res_marks[lesson]}}</th>
+                <th class="sr">{{sr_marks[lesson]}}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
