@@ -16,13 +16,58 @@
 
 {% block content %}
 <div class="students">
-    <h1>Ученики</h1>
-    <div class="column">
-    {% for student in students %}
-        <a href="" class="student">
-            {{student.surname}} {{student.first_name}}
-        </a>
-    {% endfor %}
-    </div>
+
+    <table class="table table-sm table-responsive">
+        <thead>
+            <tr>
+                <th scope="col">Ученик</th>
+                {% for date in dates %}
+                <td class="date">
+                    {{date}}
+                </td>
+                {% endfor %}
+                <th>Четвертная оценка</th>
+                <th>Средний балл</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+            <tr id="student">
+                <th>{{student.surname}} {{student.first_name}}</th>
+                {% for date in dates %}
+                <form action="" method="post">
+                  {{ form.hidden_tag() }}
+                  <td>
+                      <div class="modal fade" id="edit_mark_{{date}}_{{student.id}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h1 class="modal-title fs-5" id="exampleModalLabel">Изменение оценки</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+
+                                      {{form.mark(class='form-control', value=marks[student.id].get(date, ''))}}
+                                      {{form.id_student(class='form-control', value=student.id, type='hidden')}}
+                                      {{form.date(class='form-control', value=date, type='hidden')}}
+
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                <p>{{ form.submit(type="submit", class="btn btn-primary" ) }}</p>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                      <button type='button' class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#edit_mark_{{date}}_{{student.id}}">{{marks[student.id].get(date, '')}}</button>
+                  </td>
+                </form>
+                {% endfor %}
+                <th>{{res_marks[student]}}</th>
+                <th class="sr">{{sr_marks[student]}}</th>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
 </div>
 {% endblock %}

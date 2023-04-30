@@ -15,15 +15,18 @@
 {% block logo %} {{logo[0] + ", " + logo[1] + " класс"}} {% endblock %}
 
 {% block content %}
-<div class="but">
-    <a href="/student_marks">
-        <button name="marks">Текущие оценки</button>
-    </a>
-    <a href="/final_marks_student/{{logo}}">
-        <button name="final_marks">Итоговые оценки</button>
-    </a>
-    <a href="/timetable/{{logo}}">
-        <button name="timetable">Расписание уроков</button>
-    </a>
+<div>
+        <div class="d2"><h1><span>Выбор раздела</span></h1></div>
+        <div class="but">
+            <div><a href="/student_marks">
+                <button name="marks" class="b1">Текущие оценки</button>
+            </a></div>
+            <div><a href="/final_marks_student/{{logo}}">
+                <button name="final_marks" class="b1">Итоговые оценки</button>
+            </a></div>
+            <div><a href="/timetable/{{logo}}">
+                <button name="timetable" class="b1">Расписание уроков</button>
+            </a></div>
+        </div>
 </div>
 {% endblock %}

@@ -1,18 +1,28 @@
 button {
-    background-color: #0754E9;
-    color: white;
+    background-color: #4E8BFD;
+    color: #fff;
     text-align: center;
     font-size: 20px;
     border-radius: 10px;
     align-left: 20px;
-    border-color: #0754E9;
+    border-color: #4E8BFD;
     padding: 5px 20px;
+    margin-right: 50px;
+    margin-top: 30px;
+    margin-bottom: 100px;
 }
-.but {
-    display: grid;
-    grid-template-columns: repeat(1ft, 3);
-    grid-column-gap: 200px;
-    grid-row-gap: 3em;
+.b1 {
+    width: 200px;
+    height: 75px;
+    font-size: 25px;
+    text-align: center;
+}
+.b2 {
+    width: 300px;
+    height: 75px;
+    font-size: 25px;
+    margin: 0 auto;
+    display: block;
 }
 
 .d2 h1 {text-align: center;}
@@ -39,12 +49,19 @@ h1 {
   width: 100%;
   position: relative;
   display: inline-block;
-  color: #0754E9;
+  color: #4E8BFD;
   margin-bottom: 50px;
 }
 
-.b1 {
-    max-width: 3000px;
-    width: 100%;
-    text-color: #000000;
+h2 {
+    text-align: center;
+}
+
+a {
+    color: #fff;
+}
+
+.but {
+    margin: 0 auto;
+    display: block;
 }

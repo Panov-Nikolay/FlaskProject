@@ -1,0 +1,52 @@
+.students {
+    max-width: 100%;
+}
+
+#student th {
+    position: -webkit-sticky;
+    position: sticky;
+    left: 0px;
+    background-color: white;
+    z-index: 100;
+}
+
+.container {
+    justify-content: start;
+}
+
+.sr {
+    position: -webkit-sticky;
+    position: sticky;
+    right: 0px;
+    background: #000;
+    z-index: 100;
+}
+
+table thead tr {
+    color: #FFFFFF;
+    font-weight: bold;
+}
+
+table thead tr {
+    border-radius: 4px 4px 0 0;
+    background-color: #4E8BFD;
+}
+
+table tbody tr td {
+    border: 1px solid #0754E9;
+    border-radius: 4px;
+    background-color: #4E8BFD;
+}
+
+table tbody tr th {
+    border: 1px solid #0754E9;
+    border-radius: 4px;
+    background-color: #4E8BFD;
+}
+
+table tbody tr td:hover {
+    background-color: #a2c3dd;
+    transition-duration: 0.2s;
+}
+
+table {width: 100%; border-collapse: separate; border-spacing: 4px;}

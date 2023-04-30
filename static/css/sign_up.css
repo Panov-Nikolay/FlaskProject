@@ -15,8 +15,8 @@ form {
   left: 0;
   right: 0;
   height: 6px;
-  border-top: 2px solid #9C9CFF;
-  border-bottom: 2px solid #9C9CFF;
+  border-top: 2px solid #0754E9;
+  border-bottom: 2px solid #0754E9;
   z-index: -1;
 }
 .d2 span {
@@ -31,6 +31,6 @@ h1 {
   width: 100%;
   position: relative;
   display: inline-block;
-  color: #9C9CFF;
+  color: #0754E9;
   margin-bottom: 50px;
 }

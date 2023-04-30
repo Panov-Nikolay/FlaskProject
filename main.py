@@ -12,12 +12,29 @@ from data.subjects import Subjects
 from data.subject_plan import SubjectPlan
 from data.final_marks import FinalMarks
 from data.marks import Marks
-from datetime import datetime
+from forms.save_mark import SaveMark
+import datetime
 
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'yandexlyceum_secret_key'
 db_session.global_init("db/magazine.db")
+
+
+def date_division(part):
+    if part == 1:
+        d1 = datetime.date(year=2022, month=9, day=1)
+        d2 = datetime.date(year=2022, month=11, day=1)
+    elif part == 2:
+        d1 = datetime.date(year=2022, month=11, day=1)
+        d2 = datetime.date(year=2023, month=1, day=1)
+    elif part == 3:
+        d1 = datetime.date(year=2023, month=1, day=1)
+        d2 = datetime.date(year=2023, month=4, day=1)
+    else:
+        d1 = datetime.date(year=2023, month=4, day=1)
+        d2 = datetime.date(year=2023, month=6, day=1)
+    return [d1, d2]
 
 
 @app.route('/')
@@ -121,15 +138,69 @@ def logout():
     return redirect('/')
 
 
-@app.route('/teachers_school/<int:id_class>/<int:id_subject>', methods=['GET', 'POST'])
-def get_students(id_class, id_subject):
+@app.route('/teachers_school/<int:id_class>/<int:id_subject>/<int:part>', methods=['GET', 'POST'])
+def get_students(id_class, id_subject, part):
     db_sess = db_session.create_session()
+    submit_form = SaveMark()
+    if submit_form.validate_on_submit():
+        db_sess = db_session.create_session()
+        mark = db_sess.query(Marks).filter(Marks.id_student == submit_form.id_student.data,
+                                           Marks.id_subject == id_subject,
+                                           Marks.date == datetime.date(year=int(submit_form.date.data.split('.')[2]),
+                                                                       month=int(submit_form.date.data.split('.')[1]),
+                                                                       day=int(submit_form.date.data.split('.')[0]))).first()
+        if mark is None:
+            mark = Marks(
+                mark=submit_form.mark.data,
+                id_student=int(submit_form.id_student.data),
+                id_subject=id_subject,
+                date=datetime.date(year=int(submit_form.date.data.split('.')[2]),
+                                   month=int(submit_form.date.data.split('.')[1]),
+                                   day=int(submit_form.date.data.split('.')[0]))
+            )
+            db_sess.add(mark)
+        else:
+            mark.mark = submit_form.mark.data
+
+        db_sess.commit()
+        return redirect(f'/teachers_school/{id_class}/{id_subject}')
+    date1, date2 = date_division(part)
     form = (db_sess.query(Class).filter(Class.id == id_class).first(),
             db_sess.query(Subjects).filter(Subjects.id == id_subject).first())
-    students = db_sess.query(Student).filter(Student.id_class == id_class).all()
-    return render_template('html/students.html',
-                           user=f'{current_user.first_name[0]}. {current_user.surname[0]}. {current_user.last_name}',
-                           logo=form, students=students)
+    students = sorted(db_sess.query(Student).filter(Student.id_class == id_class).all(), key=lambda x: x.surname)
+    dates = list(map(lambda x: x[0].strftime('%d.%m.%Y'),
+                     sorted(db_sess.query(Marks.date).filter((Marks.id_subject == id_subject),
+                                                             (date1 < Marks.date), (date2 > Marks.date)).distinct())))
+    marks = {}
+    sr_marks = {}
+    res_marks = {}
+    for student in students:
+        marks[student.id] = {}
+        sum_mark = 0
+        col_mark = 0
+        for mark in sorted(
+                db_sess.query(Marks).filter(Marks.id_student == student.id, Marks.id_subject == id_subject,
+                                            date1 < Marks.date, date2 > Marks.date).all(),
+                key=lambda x: x.date):
+            marks[student.id][mark.date.strftime('%d.%m.%Y')] = mark.mark
+            m = mark.mark
+            print(m)
+            if type(m) == str:
+                if m != 'н':
+                    sum_mark += int(m[:-1])
+                    col_mark += 1
+            else:
+                sum_mark += m
+                col_mark += 1
+        if col_mark != 0:
+            sr_marks[student] = str(round(sum_mark / col_mark, 2))
+            res_marks[student] = str(round(sum_mark / col_mark + 0.01))
+        else:
+            sr_marks[student] = str(0)
+    return render_template('html/students.html', title='Оценки',
+                           user=f'{current_user.first_name[0]}. {current_user.last_name[0]}. {current_user.surname}',
+                           logo=form, students=students, marks=marks, form=submit_form, dates=dates, sr_marks=sr_marks,
+                           res_marks=res_marks)
 
 
 @app.route('/student_start', methods=['GET'])
@@ -220,6 +291,21 @@ def student_profile():
         db_sess.commit()
         return redirect('/student_start')
     return render_template('html/student_profile.html', title='Профиль', form=form, user=current_user)
+
+
+@app.route('/change_part/<int:id_class>/<int:id_subject>', methods=['GET'])
+def change_part(id_class, id_subject):
+    db_sess = db_session.create_session()
+    school = db_sess.query(School).filter(School.id == current_user.id_school).first().title
+    class1 = db_sess.query(Class).filter(Class.id == id_class).first().title
+    return render_template('html/change_part.html', title='Выбор четверти', logo=school, class1=[id_class, id_subject],
+                           user=f'{current_user.first_name[0]}. {current_user.last_name[0]}. {current_user.surname}',
+                           class2=class1)
+
+
+@app.route('/result_marks/<int:id_class>/<int:id_subject>/<int:part>', methods=['GET', 'POST'])
+def result_marks(id_class, id_subject, part):
+    db_sess = db_session.create_session()
 
 
 if __name__ == '__main__':

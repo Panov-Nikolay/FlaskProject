@@ -7,12 +7,89 @@ datalist {
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     
 }
-/* .classes {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-} */
 .classes option {
     height: 100px;
     width: 100px;
+}
+
+.rounded {
+counter-reset: li;
+list-style: none;
+font: 16px "Trebuchet MS", "Lucida Sans";
+padding: 0;
+text-shadow: 0 1px 0 rgba(255,255,255,.5);
+display: grid;
+grid-template-columns: repeat(2, 1fr);
+grid-column-gap: 200px;
+grid-row-gap: 1em;
+}
+
+.rounded a {
+position: relative;
+display: block;
+padding: .4em .4em .4em .8em;
+margin: .5em 0 .5em 2.5em;
+background: #4E8BFD;
+color: #fff;
+text-decoration: none;
+transition: all .3s ease-out;
+}
+
+.rounded a:hover {background: #0754E9;}
+.rounded a:before {
+content: counter(li);
+counter-increment: li;
+position: absolute;
+left: -2.5em;
+top: 50%;
+margin-top: -1em;
+background: #0754E9;
+height: 2em;
+width: 2em;
+line-height: 2em;
+text-align: center;
+font-weight: bold;
+}
+
+.rounded a:after {
+position: absolute;
+content: "";
+border: .5em solid transparent;
+left: -1em;
+top: 50%;
+margin-top: -.5em;
+transition: all .3s ease-out;
+}
+
+.rounded a:hover:after {
+left: -.5em;
+border-left-color: #0754E9;
+}
+
+.d2 h1 {text-align: center;}
+.d2 h1:before {
+  content: "";
+  position: absolute;
+  top: calc(50% - 5px);
+  left: 0;
+  right: 0;
+  height: 6px;
+  border-top: 2px solid #0754E9;
+  border-bottom: 2px solid #0754E9;
+  z-index: -1;
+}
+.d2 span {
+  background: white;
+  padding: 0 20px;
+}
+
+h1 {
+  font-size: 40px;
+  letter-spacing: 1px;
+  max-width: 1500px;
+  width: 100%;
+  position: relative;
+  display: inline-block;
+  color: #0754E9;
+  margin-bottom: 50px;
 }
