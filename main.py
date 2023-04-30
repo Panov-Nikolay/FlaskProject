@@ -159,8 +159,6 @@ def get_students(id_class, id_subject, part):
                                    month=int(submit_form.date.data.split('.')[1]),
                                    day=int(submit_form.date.data.split('.')[0]))
             )
-            print(int(submit_form.date.data.split('.')[2]), int(submit_form.date.data.split('.')[1]),
-                                                                int(submit_form.date.data.split('.')[0]))
             db_sess.add(mark)
         else:
             mark.mark = submit_form.mark.data
