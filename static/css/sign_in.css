@@ -1,5 +1,14 @@
 form {
-    margin-top: 10px;
+    margin-top: 25vh;
+    margin-bottom: 42vh;
+    color: rgba(0,0,0,.9);
+    padding: 10px;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.7);
+}
+h1 {
+    color: rgba(0,0,0,.9);
+    text-align: center;
 }
 .form-control {
     width: 30vw;
@@ -7,30 +16,8 @@ form {
 .message {
     color: red;
 }
-.d2 h1 {text-align: center;}
-.d2 h1:before {
-  content: "";
-  position: absolute;
-  top: calc(50% - 5px);
-  left: 0;
-  right: 0;
-  height: 6px;
-  border-top: 2px solid #0754E9;
-  border-bottom: 2px solid #0754E9;
-  z-index: -1;
-}
-.d2 span {
-  background: white;
-  padding: 0 20px;
-}
-
-h1 {
-  font-size: 40px;
-  letter-spacing: 1px;
-  max-width: 1500px;
-  width: 100%;
-  position: relative;
-  display: inline-block;
-  color: #0754E9;
-  margin-bottom: 50px;
+.container {
+    min-height: 100vh;
+    background-image: url('../img/main_bg.jpg');
+    background-size: cover;
 }

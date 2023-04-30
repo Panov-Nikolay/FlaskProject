@@ -1,9 +1,19 @@
 {% extends "html/base.html" %}
 
+{% block styles %}
+<link rel="stylesheet" type="text/css" href="{{ url_for( 'static', filename='css/start_page.css')}}">
+{% endblock %}
+
 {% block authorization %}
 <div class="authorization">
     <a href="/sign_in" class="button">Вход</a>
     <span>|</span>
     <a href="/sign_up_as_teacher" class="button">Регистрация учителя</a>
+</div>
+{% endblock %}
+
+{% block content %}
+<div class="welcome">
+    Добро пожаловать в российский электронный журнал
 </div>
 {% endblock %}

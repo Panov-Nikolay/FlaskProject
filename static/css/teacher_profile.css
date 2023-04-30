@@ -1,21 +1,15 @@
-form {
-    margin-top: 1vh;
-    margin-bottom: 5vh;
-    color: rgba(0,0,0,.9);
-    padding: 10px;
-    border-radius: 3px;
-    background-color: rgba(255, 255, 255, 0.7);
-}
-.form-control {
-    width: 30vw;
-}
-.message {
-    color: red;
-}
 .container {
     min-height: 100vh;
     background-image: url('../img/main_bg.jpg');
     background-size: cover;
+}
+form {
+    margin-top: 1vh;
+    margin-bottom: 30vh;
+    color: rgba(0,0,0,.9);
+    padding: 10px;
+    border-radius: 3px;
+    background-color: rgba(255, 255, 255, 0.7);
 }
 h1 {
     color: rgba(0,0,0,.9);
