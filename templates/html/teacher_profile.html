@@ -4,9 +4,9 @@
 <form action="" class="profile", method="post">
     {{ form.hidden_tag() }}
     <p>
-        {{ form.last_name.label }}<br>
-        {{ form.last_name(class="form-control", value=user.last_name) }}<br>
-        {% for error in form.last_name.errors %}
+        {{ form.surname.label }}<br>
+        {{ form.surname(class="form-control", value=user.surname) }}<br>
+        {% for error in form.surname.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
             </p>
@@ -22,9 +22,9 @@
         {% endfor %}
     </p>
     <p>
-        {{ form.surname.label }}<br>
-        {{ form.surname(class="form-control", value=user.surname) }}<br>
-        {% for error in form.surname.errors %}
+        {{ form.last_name.label }}<br>
+        {{ form.last_name(class="form-control", value=user.last_name) }}<br>
+        {% for error in form.last_name.errors %}
             <p class="alert alert-danger" role="alert">
                 {{ error }}
             </p>

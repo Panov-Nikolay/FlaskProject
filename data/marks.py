@@ -13,4 +13,3 @@ class Marks(SqlAlchemyBase):
     mark = sqlalchemy.Column(sqlalchemy.String)  # <--- от 2 до 5; String для поддержки "-" и "+"
 
     student = orm.relationship('Student', back_populates='marks')
-

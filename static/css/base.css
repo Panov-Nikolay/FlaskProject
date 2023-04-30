@@ -9,10 +9,6 @@
 .button:hover {
     color: grey;
 }
-.footer {
-    display: flex;
-    justify-content: center;
-}
 .container {
     display: flex;
     margin-left: auto;
@@ -20,4 +16,8 @@
     justify-content: center;
     max-width: 100vw;
     box-sizing: border-box;
+}
+.welcome {
+    margin-top: 40vh;
+    font-size: 24px;
 }
