@@ -1,0 +1,52 @@
+Учителя: 
+
+id - логин - пароль
+13 - teacher13 - EFvCwpM2lSM8
+14 - teacher14 - 2_5c7Aj2
+15 - techaer15 - 9hR_ZISl
+16 - teacher16 - djQt0piWY
+17 - teacher17 - NbOYatBeER
+18 - teacher18 - RVVQb7FG
+19 - teacher19 - DOVwkwMhl
+20 - teacher20 - p8O_y6LEWyi0
+21 - teaсher21 - CI_CM6b8YY
+22 - teacher22 - AhkgiFWhBHEq
+23 - teacher23 - z_pe5o4bsBER
+24 - teacher24 - ZL1IK3x1k23d
+25 - teacher25 - xavt6Dw_qx
+26 - teacher26 - aHWeRdHOInb
+27 - teacher27 - HDgeaj9Rr
+28 - teacher28 - bKyPKS0WZ
+29 - teacher29 - hYv4r6WO
+30 - teacher30 - yMiU5CPyAN
+
+-------------------------------------------------
+
+Ученики:
+
+id - логин - пароль
+1077 - gns7nj9w0 - 5gqbs_hNSY3D
+1078 - ux_qi94_r_ - KE_UAFkWd2V
+1079 - 122nl - YtWHowmshzEq8
+1080 - va08k - 2HViQ9qRut
+1081 - t521g - AUzlB2xR
+1082 - 3sm_3zad - cfqG0UG0JI
+1083 - fb2xr - rQcEp_tm9E
+1084 - o959erknz2 - s3MnFpJqWjW
+1085 - rb4cvag - 1PnFR3KLfMM
+1086 - al3ti_h - g_j52xa_
+1087 - giip7vtlm7 - 4C5BINbTp8WY
+1088 - r6xwkx - asdjf4LKE7
+1089 - vmsa0pe7 - I9IvWNhH
+1090 - qjreiw8c3 - qOvurrIO6
+1091 - 4d3fhu - 4JBggiHGzZ
+1092 - 0krnz_mlzg - vxNi30XMy1Z
+1093 - 5n5yet - ZtemTSIKjMUY
+1094 - tpa634dqwt - 9yF_Wj7x_WpMh
+1095 - bdxer7u50r - mN3R2o3OZ8W
+1096 - mxftimg - 6shB0Dgow_Yn
+1097 - 0qhqw1oa - eoPIdpujV
+1098 - pelvc - ldVenA1Tc
+
+
+
